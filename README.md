@@ -3,16 +3,20 @@ CouchDB+Materialize+Angular+Node.js
 
 ![alt tag](http://ashishware.com/images/CouchDB_illustration.png)
 
-## Init
+## File Structure
+
+var express = require('express')
+var app = express()
+app.use(express.static(__dirname))
+app.listen(3000)
 
 ## Scafold dependencies
 npm init; npm install express --save; npm install angular --save; npm install angular-route --save; npm install angular-resource --save; npm install angular-materialize --save
 
-
 ## Set Up App
 npm install --save couchapp
 
-## Install CouchDB
+## Install CouchDB if Needed
 (On Mac):
 brew install autoconf
 brew install autoconf-archive
@@ -22,3 +26,35 @@ brew install erlang
 brew install icu4c
 brew install spidermonkey
 brew install curl; brew link icu4c; brew link erlang; brew install couchdb; brew install erlang --no-docs; brew install [--devel|--head] couchdb
+
+## Run it as a Daemon
+
+Running as a Daemon
+You can use the launchctl command to control the CouchDB daemon.
+
+You can load the configuration by running:
+
+sudo launchctl load \
+     /usr/local/Library/LaunchDaemons/org.apache.couchdb.plist
+     
+You can stop the CouchDB daemon by running:
+
+sudo launchctl unload \
+     /usr/local/Library/LaunchDaemons/org.apache.couchdb.plist
+     
+You can start CouchDB by running:
+
+sudo launchctl start org.apache.couchdb
+
+You can restart CouchDB by running:
+
+sudo launchctl stop org.apache.couchdb
+
+You can edit the launchd configuration by running:
+
+open /usr/local/Library/LaunchDaemons/org.apache.couchdb.plist
+
+To start the daemon on boot, copy the configuration file to:
+
+/Library/LaunchDaemons
+
