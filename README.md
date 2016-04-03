@@ -1,6 +1,8 @@
 # CMAN_Stack 🛋🛋🛋🛋🛋
 CouchDB+Materialize+Angular+Node.js
 
+![alt tag](http://ashishware.com/images/CouchDB_illustration.png)
+
 ## Init
 
 ## Scafold dependencies
