@@ -63,7 +63,7 @@ To start the daemon on boot, copy the configuration file to:
 
 couchdb & # start a CouchDB
 
-# http://127.0.0.1:5984/ Is a link to your API
+http://127.0.0.1:5984/ Is a link to your API
 
 curl -X PUT http://127.0.0.1:5984/emails # create the database emails
 
@@ -75,11 +75,51 @@ curl -X POST http://127.0.0.1:5984/expenses -H "Content-Type: application/json" 
 
 ### Set up Clientside app (AngularJs)
 
+In whatever directory you want to set up your public website, create an app.js file for your Angular App.
+
 mkdir clientside
 nano app.clientside.js
 
-.constant('appSettings', {
-  db: 'http://127.0.0.1:5984/emails'
-});
+
+Now to integrate our email resource with Angular's MVC framework, you must add it to "Factory" (M), then add a "Controller" (C), then add it to your html view (V).
+
+
+M: paste this in your Angular app.js file:
+
+// add to my app.angular.js file
+.factory('Emails', function($resource) {
+ 
+    var Methods = {
+        'getAll': {
+            'method':'GET',
+            'url':'http://localhost:5984/emails/_all_docs',
+            'params': {
+                'include_docs':true
+            },
+            'isArray':true,
+            'transformResponse':function(data) {
+                var returnOb = angular.fromJson(data);
+                return returnOb.rows;
+            }
+        }
+    };
+     
+    var Email = $resource('http://localhost:5984/emails/:id',{'id':'@id'},Methods);
+     
+    return Email;
+})
+
+C: Now paste this:
+
+
+
+// add to my app.angular.js file
+routerApp.controller('EmailController', function($scope, Email) {
+    Email.getAll(function(ob) {
+        $scope.emails = ob;
+    });
+})
+
+
 
 
