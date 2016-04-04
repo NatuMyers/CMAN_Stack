@@ -75,37 +75,64 @@ curl -X POST http://127.0.0.1:5984/expenses -H "Content-Type: application/json" 
 
 ### Set up Clientside app (AngularJs)
 
+## Config couchDB for that
+
+Now if we try to connect to our database with angular, it’s going to throw a cross domain error. To get around this issue I need to enable CORS from CouchDB. If you are running Couch on the default port you can get to the config file by going to http://127.0.0.1:5984/_utils/config.html. Under the httpd section I will set ‘enable_cors’ to ‘true’, then I will ‘Add a new section’ and supply the following data
+
+    section: cors
+    option: origins
+    value: *
+
+In a production environment I would probably tie CORS down to whatever domains I expect to receive requests from, but we are building a prototype and not a production app. Now we're good to connect to angular.
+
 In whatever directory you want to set up your public website, create an app.js file for your Angular App.
 
 mkdir clientside
 nano app.clientside.js
 
 
-Now to integrate our email resource with Angular's MVC framework, you must add it to "Factory" (M), then add a "Controller" (C), then add it to your html view (V).
+Now to integrate our email resource with Angular's MVC framework, you must add the resource that communicates to the api, then add emails it to "Factory" (M), then add a "Controller" (C), then add it to your html view (V).
 
 
 M: paste this in your Angular app.js file:
 
     // add to my app.angular.js file
+    
+    //resource
     .factory('Emails', function($resource) {
      
         var Methods = {
-            'getAll': {
-                'method':'GET',
-                'url':'http://localhost:5984/emails/_all_docs',
-                'params': {
-                    'include_docs':true
-                },
-                'isArray':true,
-                'transformResponse':function(data) {
-                    var returnOb = angular.fromJson(data);
-                    return returnOb.rows;
-                }
-            }
+                'getAll': {
+                    'method':'GET',
+                    'url':'http://localhost:5984/emails/_all_docs',
+                    'params': {
+                        'include_docs':true
+                    },
+                    'isArray':true,
+                    'transformResponse':function(data) {
+                        var returnOb = angular.fromJson(data);
+                        return returnOb.rows;
+                    }
+              }
         };
      
         var Email = $resource('http://localhost:5984/emails/:id',{'id':'@id'},Methods);
         return Email;
+    })
+    
+    /*
+    This factory returns a resource object which will have all of the standard API methods I need to CRUD my beer object.       One of the things to take note of is the the method I am adding ‘getAll’ which uses CouchDB’s built in _all_docs method     to retrieve a listing of all beers. I also am setting the param ‘include_docs’ to true. This will tell CouchDB that I       also want the documents along with each record, otherwise it will return just an array of the document IDs (not really      useful for a listing page!)
+
+    */
+    
+    .factory('Email', function() {
+        return {
+            '_id':null,
+            'setId' : function() { 
+                this._id = encodeURIComponent((this.brand + '_' + this.name).replace(' ', '_'));
+            },
+            'entries' : []
+        };
     })
 
 C: Now paste this:
@@ -120,5 +147,5 @@ C: Now paste this:
 
 V: emails.html should be a view that's wraped by index.html, so 
 
-    Nano emails.html
+    nano emails.html
 
