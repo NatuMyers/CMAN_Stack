@@ -86,40 +86,39 @@ Now to integrate our email resource with Angular's MVC framework, you must add i
 
 M: paste this in your Angular app.js file:
 
-// add to my app.angular.js file
-.factory('Emails', function($resource) {
- 
-    var Methods = {
-        'getAll': {
-            'method':'GET',
-            'url':'http://localhost:5984/emails/_all_docs',
-            'params': {
-                'include_docs':true
-            },
-            'isArray':true,
-            'transformResponse':function(data) {
-                var returnOb = angular.fromJson(data);
-                return returnOb.rows;
+    // add to my app.angular.js file
+    .factory('Emails', function($resource) {
+     
+        var Methods = {
+            'getAll': {
+                'method':'GET',
+                'url':'http://localhost:5984/emails/_all_docs',
+                'params': {
+                    'include_docs':true
+                },
+                'isArray':true,
+                'transformResponse':function(data) {
+                    var returnOb = angular.fromJson(data);
+                    return returnOb.rows;
+                }
             }
-        }
-    };
+        };
      
-    var Email = $resource('http://localhost:5984/emails/:id',{'id':'@id'},Methods);
-     
-    return Email;
-})
+        var Email = $resource('http://localhost:5984/emails/:id',{'id':'@id'},Methods);
+        return Email;
+    })
 
 C: Now paste this:
 
+    // add to my app.angular.js file
+    routerApp.controller('EmailController', function($scope, Email) {
+        Email.getAll(function(ob) {
+            $scope.emails = ob;
+        });
+    })
 
 
-// add to my app.angular.js file
-routerApp.controller('EmailController', function($scope, Email) {
-    Email.getAll(function(ob) {
-        $scope.emails = ob;
-    });
-})
+V: emails.html should be a view that's wraped by index.html, so 
 
-
-
+    Nano emails.html
 
