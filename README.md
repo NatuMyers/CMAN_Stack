@@ -3,7 +3,7 @@ CouchDB+Materialize+Angular+Node.js
 
 ![alt tag](http://ashishware.com/images/CouchDB_illustration.png)
 
-## File Structure
+## COUCH = API + DB in one go.
 
 var express = require('express')
 var app = express()
@@ -57,4 +57,29 @@ open /usr/local/Library/LaunchDaemons/org.apache.couchdb.plist
 To start the daemon on boot, copy the configuration file to:
 
 /Library/LaunchDaemons
+
+
+### Check out your API and Add data
+
+couchdb & # start a CouchDB
+
+# http://127.0.0.1:5984/ Is a link to your API
+
+curl -X PUT http://127.0.0.1:5984/emails # create the database emails
+
+
+## Insert a Record
+
+curl -X POST http://127.0.0.1:5984/expenses -H "Content-Type: application/json" -d '{"email": "foo@bar.com"}'
+
+
+### Set up Clientside app (AngularJs)
+
+mkdir clientside
+nano app.clientside.js
+
+.constant('appSettings', {
+  db: 'http://127.0.0.1:5984/emails'
+});
+
 
