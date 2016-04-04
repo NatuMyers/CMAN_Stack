@@ -121,7 +121,11 @@ M: paste this in your Angular app.js file:
     })
     
     /*
-    This factory returns a resource object which will have all of the standard API methods I need to CRUD my beer object.       One of the things to take note of is the the method I am adding ‘getAll’ which uses CouchDB’s built in _all_docs method     to retrieve a listing of all beers. I also am setting the param ‘include_docs’ to true. This will tell CouchDB that I       also want the documents along with each record, otherwise it will return just an array of the document IDs (not really      useful for a listing page!)
+    This factory returns a resource object which will have all of the standard API methods I need to CRUD my beer object.
+    One of the things to take note of is the the method I am adding ‘getAll’ which uses CouchDB’s built in _all_docs method
+    to retrieve a listing of all beers. I also am setting the param ‘include_docs’ to true. This will tell CouchDB that I
+    also want the documents along with each record, otherwise it will return just an array of the document IDs (not really
+    useful for a listing page!)
 
     */
     
