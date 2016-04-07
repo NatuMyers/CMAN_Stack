@@ -1,0 +1,17 @@
+
+<!-- create a emails.html file and add it to the /views folder in the application document root -->
+<div class="email-list">
+    <h1>Emails
+        <a href="#/email/new" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Add An Email</a>
+    </h1>
+    <alert ng-if="emails.length == 0" type="info">There are currently no email reviews, be the first to add one!</alert>
+    <div class="list-group">
+        <a href="#/email/{{email._id}}" ng-repeat="email in emails" ng-init="email = email.doc" class="email list-group-item">
+            <h3>
+                {{email.brand}}
+                <em>{{email.name}}</em>
+                <small class="pull-right">{{email.abv}}% abv</small>
+            </h3>
+        </a>
+    </div>
+</div>

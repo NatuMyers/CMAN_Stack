@@ -1,0 +1,47 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+
+ @font-face { font-family: Stellar; font-weight: light; src: url('font/Stellar-light.otf');}
+@font-face { font-family: Stellar; font-weight: medium; src: url('font/Stellar-Medium.otf');}
+
+ h6 { font-family: Stellar, sans-serif;
+      font-size: 700%;
+      text-shadow: 6px 6px 8px #000000;
+     }
+
+ h7 { font-family: Stellar, sans-serif;
+      font-size: 130%;
+     }
+
+
+    .bg-video {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -100;
+        background: url('frontendimg/concert.jpg') no-repeat;
+        background-size: cover;
+    }
+    .content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        background: rgba(255, 255, 255, .9);
+    }
