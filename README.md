@@ -2,7 +2,7 @@
 CouchDB+Materialize+Angular+Node.js
 
 ![alt tag](http://ashishware.com/images/CouchDB_illustration.png)
- 
+  
 ## COUCH = API + DB in one go.
  
 var express = require('express')
